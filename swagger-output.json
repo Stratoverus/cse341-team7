@@ -30,11 +30,6 @@
           "Users"
         ],
         "summary": "Get all users",
-    "/destination/": {
-      "get": {
-        "tags": [
-          "Destination"
-        ],
         "description": "",
         "produces": [
           "application/json"
@@ -53,8 +48,6 @@
           "Users"
         ],
         "summary": "creates user and add to database",
-          "Destination"
-        ],
         "description": "",
         "parameters": [
           {
@@ -76,19 +69,6 @@
                   "example": "any"
                 },
                 "password": {
-                "name": {
-                  "example": "any"
-                },
-                "city": {
-                  "example": "any"
-                },
-                "country": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "tags": {
                   "example": "any"
                 }
               }
@@ -117,11 +97,6 @@
           "Users"
         ],
         "summary": "get a single user - must know the _id",
-    "/destination/{id}": {
-      "get": {
-        "tags": [
-          "Destination"
-        ],
         "description": "",
         "produces": [
           "application/json"
@@ -154,8 +129,6 @@
           "Users"
         ],
         "summary": "updates user",
-          "Destination"
-        ],
         "description": "",
         "parameters": [
           {
@@ -183,28 +156,6 @@
                   "example": "any"
                 },
                 "password": {
-            "description": "Fields to update (any subset)",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "city": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "country": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "tags": {
-                  "type": "string",
                   "example": "any"
                 }
               }
@@ -221,9 +172,6 @@
           "400": {
             "description": "Bad Request"
           },
-          "204": {
-            "description": "No Content"
-          },
           "404": {
             "description": "Not Found"
           },
@@ -237,8 +185,6 @@
           "Users"
         ],
         "summary": "delete user",
-          "Destination"
-        ],
         "description": "",
         "parameters": [
           {

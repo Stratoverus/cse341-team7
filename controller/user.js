@@ -6,11 +6,12 @@ const getAll = async (req, res) => {
     //#swagger.summary = Get all users 
     //#swagger.responses[200] Lists all users - schema => _id, role, name, email, username, password
     try {
-        const user = await mongodb.getDatabase().db('lucky7Travel').collection('user').find().toArray();
+        const user = await mongodb.getDatabase().db().collection('user').find().toArray();
+
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(user);
     } catch (err) {
-        res.status(500).json({ message: "Error - could not find users", error });
+        res.status(500).json({ message: "Error - could not find users", error: err });
     }
 };
 
