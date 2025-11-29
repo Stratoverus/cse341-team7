@@ -1,0 +1,47 @@
+// LOCALHOST
+
+### GET ALL USERS
+GET http://localhost:3000/user
+
+### GET ALL DESTINATION
+GET http://localhost:3000/destination
+
+### GET ALL REVIEWS
+GET http://localhost:3000/review
+
+### CREATE USER
+POST http://localhost:3000/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "migarcos",
+    "name": "Miguel",
+    "email": "migarcis@email.com",
+    "role": "developer",
+    "password": "Mas97531!"
+}
+
+### CREATE REVIEW
+POST http://localhost:3000/review HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": "692b4ebb984f0ba0c3b4d2d5",
+    "destnationId": "6927f199f077d9b1233da123",
+    "rating": 5,
+    "reviewText": "I loved this wonderful, dreamlike trip. A fantastic experience visiting historical and industrial sites.",
+    "visitDate": "2025-01-02",
+    "reviewDate": "2025-01-21"
+}
+
+### DELETE REVIEW
+DELETE http://localhost:3000/review/692b54c1ca663498d7b4f9aa
+
+### UPDATE REVIEW
+PUT http://localhost:3000/review/692b54c1ca663498d7b4f9aa HTTP/1.1
+Content-Type: application/json
+
+{
+    "rating": 5,
+    "reviewText": "A fantastic experience visiting historical and industrial sites. I loved this wonderful, dreamlike trip."
+}
