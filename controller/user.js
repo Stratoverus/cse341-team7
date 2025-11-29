@@ -6,7 +6,7 @@ const getAll = async (req, res) => {
     //#swagger.summary = Get all users 
     //#swagger.responses[200] Lists all users - schema => _id, role, name, email, username, password
     try {
-        const user = await mongodb.getDatabase().db().collection('user').find().toArray();
+        const user = await mongodb.getDatabase().db('lucky7Travel').collection('user').find().toArray();
 
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(user);
@@ -25,7 +25,7 @@ const getSingleUser = async (req, res) => {
         }
 
         const userId = new ObjectId(req.params.id);
-        const user = await mongodb.getDatabase().db().collection("user").findOne({ _id: userId });
+        const user = await mongodb.getDatabase().db('lucky7Travel').collection("user").findOne({ _id: userId });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -48,7 +48,7 @@ const createUser = async (req, res) => {
             role: req.body.role,
             password: req.body.password
         };
-        const response = await mongodb.getDatabase().db().collection("user").insertOne(user);
+        const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").insertOne(user);
         
         if (response.acknowledged) {
             return res.status(201).json({ message: "User Created", id: response.insertedId });
@@ -78,7 +78,7 @@ const updateUser = async (req, res) => {
             password: req.body.password
         };
 
-        const response = await mongodb.getDatabase().db().collection("user").replaceOne({ _id: userId }, user);
+        const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").replaceOne({ _id: userId }, user);
         if (response.matchedCount === 0) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -102,7 +102,7 @@ const deleteUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid user ID" });
         }
         const userId = new ObjectId(req.params.id);
-        const response = await mongodb.getDatabase().db().collection("user").deleteOne({ _id: userId });
+        const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").deleteOne({ _id: userId });
         if (response.deletedCount > 0) {
             return res.status(204).send();
         }

@@ -2,6 +2,7 @@ const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const itineraries = await mongodb.getDatabase()
             .db('lucky7Travel')
@@ -17,6 +18,7 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const itineraryId = new ObjectId(req.params.id);
         const itinerary = await mongodb.getDatabase()
@@ -36,6 +38,7 @@ const getSingle = async (req, res) => {
 };
 
 const getByUser = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const userId = req.params.userId;
         const itineraries = await mongodb.getDatabase()
@@ -56,6 +59,7 @@ const getByUser = async (req, res) => {
 };
 
 const getByDestination = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const destinationId = req.params.destinationId;
         const itineraries = await mongodb.getDatabase()
@@ -76,6 +80,7 @@ const getByDestination = async (req, res) => {
 };
 
 const createItinerary = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const newItinerary = {
             userId: req.body.userId,
@@ -106,6 +111,7 @@ const createItinerary = async (req, res) => {
 };
 
 const updateItinerary = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const itineraryId = new ObjectId(req.params.id);
         
@@ -143,6 +149,7 @@ const updateItinerary = async (req, res) => {
 };
 
 const deleteItinerary = async (req, res) => {
+    //#swagger.tags=["Itinerary"]
     try {
         const itineraryId = new ObjectId(req.params.id);
         const result = await mongodb.getDatabase()
