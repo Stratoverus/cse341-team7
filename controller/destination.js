@@ -1,11 +1,13 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
+
 const getAll = async (req, res) => {
     //#swagger.tags=["Destination"]
     try {
         const destinations = await mongodb.getDatabase().db('lucky7Travel').collection('destination').find().toArray();
-        
+
+
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(destinations);
     } catch (err) {
@@ -13,15 +15,18 @@ const getAll = async (req, res) => {
     }
 };
 
+
 const getSingle = async (req, res) => {
     //#swagger.tags=["Destination"]
     try {
         const destinationId = new ObjectId(req.params.id);
         const destination = await mongodb.getDatabase().db('lucky7Travel').collection('destination').findOne({ _id: destinationId });
-        
+
+
         if (!destination) {
             return res.status(404).json({ message: "Destination not found!" })
         }
+
 
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(destination);
@@ -30,15 +35,18 @@ const getSingle = async (req, res) => {
     }
 };
 
+
 const getAllByCountry = async (req, res) => {
     //#swagger.tags=["Destination"]
     try {
         const country = req.params.country;
         const destinations = await mongodb.getDatabase().db('lucky7Travel').collection('destination').find({ country }).toArray();
-        
+
+
         if (destinations.length === 0) {
             return res.status(404).json({ message: `No destinations found in ${country}` });
         }
+
 
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(destinations);
@@ -46,16 +54,19 @@ const getAllByCountry = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
 
 const getAllByTag = async (req, res) => {
     //#swagger.tags=["Destination"]
     try {
         const tag = req.params.tag;
         const destinations = await mongodb.getDatabase().db('lucky7Travel').collection('destination').find({ tags: tag }).toArray();
-        
+
+
         if (destinations.length === 0) {
             return res.status(404).json({ message: `No destinations found with tag "${tag}"` });
         }
+
 
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(destinations);
@@ -63,6 +74,7 @@ const getAllByTag = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
 
 const addDestination = async (req, res) => {
     //#swagger.tags=["Destination"]
@@ -76,8 +88,10 @@ const addDestination = async (req, res) => {
             rating: 0
         };
 
+
         const result = await mongodb.getDatabase().db('lucky7Travel').collection('destination').insertOne(newDestination);
-        
+
+
         if (result.acknowledged) {
             res.status(201).json({ message: "Destination has been created!" });
         } else {
@@ -87,6 +101,7 @@ const addDestination = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
 
 const updateDestination = async (req, res) => {
     //#swagger.tags=["Destination"]
@@ -106,10 +121,12 @@ const updateDestination = async (req, res) => {
         const destinationId = new ObjectId(req.params.id);
         const exists = await mongodb.getDatabase().db('lucky7Travel').collection('destination').findOne({ _id: destinationId})
 
+
         if (!exists) {
             return res.status(404).json({ message: "Destination not found."})
         }
-        
+
+
         // Making it so that they can't updated the review field
         const updates = {};
         const updatableFields = ['name', 'city', 'country', 'description', 'tags']
@@ -119,8 +136,10 @@ const updateDestination = async (req, res) => {
             }
         });
 
+
         const result = await mongodb.getDatabase().db('lucky7Travel').collection('destination').updateOne({ _id: destinationId }, { $set: updates } )
-        
+
+
         if (result.modifiedCount > 0) {
             res.status(204).json({ message: "Destination was updated." });
         } else {
@@ -131,11 +150,13 @@ const updateDestination = async (req, res) => {
     }
 };
 
+
 const deleteDestination = async (req, res) => {
     //#swagger.tags=["Destination"]
     try {
         const destinationId = new ObjectId(req.params.id);
         const result = await mongodb.getDatabase().db('lucky7Travel').collection('destination').deleteOne({ _id: destinationId });
+
 
         if (result.deletedCount > 0) {
             res.status(204).send();
@@ -146,5 +167,7 @@ const deleteDestination = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+
 
 module.exports = { getAll, getSingle, getAllByCountry, getAllByTag, addDestination, updateDestination, deleteDestination }

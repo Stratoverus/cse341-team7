@@ -24,11 +24,12 @@
         }
       }
     },
-    "/destination/": {
+    "/user/": {
       "get": {
         "tags": [
-          "Destination"
+          "Users"
         ],
+        "summary": "Get all users",
         "description": "",
         "produces": [
           "application/json"
@@ -44,8 +45,9 @@
       },
       "post": {
         "tags": [
-          "Destination"
+          "Users"
         ],
+        "summary": "creates user and add to database",
         "description": "",
         "parameters": [
           {
@@ -54,19 +56,19 @@
             "schema": {
               "type": "object",
               "properties": {
+                "username": {
+                  "example": "any"
+                },
                 "name": {
                   "example": "any"
                 },
-                "city": {
+                "email": {
                   "example": "any"
                 },
-                "country": {
+                "role": {
                   "example": "any"
                 },
-                "description": {
-                  "example": "any"
-                },
-                "tags": {
+                "password": {
                   "example": "any"
                 }
               }
@@ -76,6 +78,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
@@ -149,8 +154,9 @@
     "/destination/{id}": {
       "get": {
         "tags": [
-          "Destination"
+          "Users"
         ],
+        "summary": "get a single user - must know the _id",
         "description": "",
         "produces": [
           "application/json"
@@ -167,6 +173,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -177,8 +186,9 @@
       },
       "put": {
         "tags": [
-          "Destination"
+          "Users"
         ],
+        "summary": "updates user",
         "description": "",
         "parameters": [
           {
@@ -190,24 +200,19 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Fields to update (any subset)",
             "schema": {
               "type": "object",
               "properties": {
+                "username": {
+                  "example": "any"
+                },
                 "name": {
-                  "type": "string",
                   "example": "any"
                 },
-                "city": {
-                  "type": "string",
+                "email": {
                   "example": "any"
                 },
-                "country": {
-                  "type": "string",
-                  "example": "any"
-                },
-                "description": {
-                  "type": "string",
+                "role": {
                   "example": "any"
                 },
                 "tags": {
@@ -225,6 +230,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           },
@@ -241,8 +249,9 @@
       },
       "delete": {
         "tags": [
-          "Destination"
+          "Users"
         ],
+        "summary": "delete user",
         "description": "",
         "parameters": [
           {
@@ -255,6 +264,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
