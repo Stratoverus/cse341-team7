@@ -4,11 +4,11 @@ const { reviewRules } = require('../utilities/reviewValidation');
 
 router.get('/', reviewCtrl.getAll);
 
-router.get('/:id', reviewCtrl.getSingle);
-
 router.get('/getByDestination/:id', reviewCtrl.getByDestination);
 
 router.get('/getByUser/:id', reviewCtrl.getByUser);
+
+router.get('/:id', reviewCtrl.getSingle);
 
 router.post('/', reviewRules, reviewCtrl.createReview);
 
