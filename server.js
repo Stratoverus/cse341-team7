@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000;
 app
     .use(express.json())
     .use('/', require('./routes'))
-    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 mongodb.initDb((err) => {
     if(err) {
