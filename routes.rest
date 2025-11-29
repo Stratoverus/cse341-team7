@@ -34,6 +34,19 @@ Content-Type: application/json
     "reviewDate": "2025-01-21"
 }
 
+### CREATE REVIEW
+POST http://localhost:3000/review HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": "",
+    "destnationId": "6927f199",
+    "rating": 9,
+    "reviewText": 98709870986096,
+    "visitDate": "2025-01-02",
+    "reviewDate": ""
+}
+
 ### DELETE REVIEW
 DELETE http://localhost:3000/review/692b54c1ca663498d7b4f9aa
 
@@ -45,3 +58,4 @@ Content-Type: application/json
     "rating": 5,
     "reviewText": "A fantastic experience visiting historical and industrial sites. I loved this wonderful, dreamlike trip."
 }
+
