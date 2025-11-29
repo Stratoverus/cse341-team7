@@ -11,5 +11,11 @@ router.use('/review', require('./review'));
 router.use('/user', require('./user'));
 
 
+router.use("/user", require("./user"));
+router.use("/destination", require("./destination"));
+router.use("/itinerary", require("./itinerary"));
+router.use("/review", require("./review"));
+
+router.use("/", require("./swagger"));
 
 module.exports = router;
