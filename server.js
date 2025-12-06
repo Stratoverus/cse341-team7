@@ -15,6 +15,8 @@ app
         resave: false,
         saveUninitialized: true ,
     }))
+    .use(passport.initialize())
+    .use(passport.session())
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader(
@@ -36,10 +38,25 @@ app
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL
     },
-    function(accessToken, refreshToken, profile, done) {
-        //User.findOrCreate({ githubId: profile.id }, function (err, user){
-            return done(null, profile);
-        //});
+    async function(accessToken, refreshToken, profile, done) {
+        try {
+            const userCollection = mongodb.getDatabase().db('lucky7Travel').collection('user');
+            const user = userCollection.findOne({ githubId: profile.id });
+            if (!user) {
+                const result = await userCollection.insertOne({
+                    githubId: profile.id,
+                    username: profile.username,
+                    name: profile.name,
+                    email: profile.email,
+                    role: 'client',
+                    createdAt: new Date()
+                });
+                const user = userCollection.findOne({ githubId: profile.id });
+            }
+            return done(null, profile)
+        } catch (error) {
+            return done(error);
+        }
     }
 ));
     

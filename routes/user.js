@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const passport = require('passport');
-
 const userController = require('../controller/user');
 const validateUser = require('../utilities/userValidation');
 const { isAuthenticated } = require('../utilities/userAuthentication');
