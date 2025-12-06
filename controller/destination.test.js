@@ -25,13 +25,14 @@ describe('Destination Controller', () => {
     });
 
     afterAll(async () => {
-        // Force close the MongoDB connection
+        // Attempting to force close the MongoDB connection... but might not be working though. 
         const db = mongodb.getDatabase();
         if (db && db.client) {
-            await db.client.close(true); // Force close
+            await db.client.close(true);
         }
     });
 
+    // Testing the getall function
     describe('getAll', () => {
         it('should return all destinations with status 200', async () => {
             await destinationController.getAll(req, res);
@@ -44,6 +45,7 @@ describe('Destination Controller', () => {
         });
     });
 
+    // testing the getsingle function
     describe('getSingle', () => {
         it('should return a single destination with status 200 for valid ID', async () => {
             const destinations = await mongodb.getDatabase()
