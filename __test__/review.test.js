@@ -23,11 +23,11 @@ describe("Test GetAll review controller", () => {
         ]
 
         database.getDatabase.mockReturnValue({
-            db: () => ({
-                collection: () => ({
-                    find: () => {
-                        toArray: () => Promise.resolve(mockReviews)
-                    }
+            db: jest.fn().mockReturnValue({
+                collection: jest.fn().mockReturnValue({
+                    find: jest.fn().mockReturnValue({
+                        toArray: jest.fn().mockResolvedValue(mockReviews)
+                    })
                 })
             })
         });
@@ -42,11 +42,11 @@ describe("Test GetAll review controller", () => {
     test("Should return 500 when error returns", async () =>{
 
         database.getDatabase.mockReturnValue({
-            db: () => ({
-                collection: () => ({
-                    find: () => {
-                        toArray: () => { throw new Error("DB Error") }
-                    }
+            db: jest.fn().mockReturnValue({
+                collection: jest.fn().mockReturnValue({
+                    find: jest.fn().mockReturnValue({
+                        toArray: jest.fn().mockRejectedValue(new Error("DB Error"))
+                    })
                 })
             })
         });
@@ -55,6 +55,6 @@ describe("Test GetAll review controller", () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
 
-        expect(res.json).toHaveBeenCalledWith({ error: "DB error"});
+        expect(res.json).toHaveBeenCalledWith({ error: "DB Error"});
     });
 });
