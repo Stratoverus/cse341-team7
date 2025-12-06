@@ -6,6 +6,22 @@ GET http://localhost:3000/user
 ### GET ALL DESTINATION
 GET http://localhost:3000/destination
 
+### POST DESTINATION
+POST http://localhost:3000/destination HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "2-Day Mompox Private Tour",
+    "city": "Cartagena",
+    "country": "Colombia",
+    "description": "Discover the town's rich history, visit goldsmith workshops, and enjoy a scenic drive along the Magdalena River.",
+    "tags": [
+      "Exotic",
+      "Caribbean"
+    ],
+    "rating": 0
+}
+
 ### GET ALL REVIEWS
 GET http://localhost:3000/review
 
@@ -16,7 +32,7 @@ Content-Type: application/json
 {
     "username": "migarcos",
     "name": "Miguel",
-    "email": "migarcis@email.com",
+    "email": "migarcos@email.com",
     "role": "developer",
     "password": "Mas97531!"
 }
@@ -26,12 +42,12 @@ POST http://localhost:3000/review HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId": "692b4ebb984f0ba0c3b4d2d5",
-    "destnationId": "6927f199f077d9b1233da123",
+    "userId": "692b6c045e80369613bb7fa9",
+    "destnationId": "692d11f1d971213cbda85416",
     "rating": 5,
-    "reviewText": "I loved this wonderful, dreamlike trip. A fantastic experience visiting historical and industrial sites.",
-    "visitDate": "2025-01-02",
-    "reviewDate": "2025-01-21"
+    "reviewText": "A really exotic place, with beautiful enviroment. Kind people guides this tour",
+    "visitDate": "2025-10-10",
+    "reviewDate": "2025-10-15"
 }
 
 ### CREATE REVIEW
