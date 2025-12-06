@@ -1,5 +1,6 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
+const bcrypt = require('bcrypt');
 
 const getAll = async (req, res) => {
     //#swagger.tags=["Users"]
@@ -41,12 +42,13 @@ const createUser = async (req, res) => {
     //#swagger.summary = creates user and add to database 
     //#swagger.responses[204]
     try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = {
             username: req.body.username,
             name: req.body.name,
             email: req.body.email,
             role: req.body.role,
-            password: req.body.password
+            password: hashedPassword
         };
         const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").insertOne(user);
         
@@ -69,13 +71,13 @@ const updateUser = async (req, res) => {
         }
 
         const userId = new ObjectId(req.params.id);
-
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = {
             username: req.body.username,
             name: req.body.name,
             email: req.body.email,
             role: req.body.role,
-            password: req.body.password
+            password: hashedPassword
         };
 
         const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").replaceOne({ _id: userId }, user);
