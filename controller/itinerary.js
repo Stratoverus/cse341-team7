@@ -111,11 +111,22 @@ const createItinerary = async (req, res) => {
 };
 
 const updateItinerary = async (req, res) => {
-    //#swagger.tags=["Itinerary"]
+    //#swagger.tags = ['Itinerary']
+    /*#swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Update any field(s) you want',
+        schema: {
+            title: "Updated Paris Trip",
+            description: "Now with more croissants",
+            startDate: "2025-02-02",
+            endDate: "2025-03-03",
+            destinations: ["6927f199f077d9b1233da123"],
+            isPublic: true
+        }
+    }*/
     try {
         const itineraryId = new ObjectId(req.params.id);
         
-        // Check if exists
         const exists = await mongodb.getDatabase()
             .db('lucky7Travel')
             .collection('itinerary')
@@ -133,13 +144,17 @@ const updateItinerary = async (req, res) => {
             }
         });
 
+        if (Object.keys(updates).length === 0) {
+            return res.status(200).json({ message: "No fields provided to update" });
+        }
+
         const result = await mongodb.getDatabase()
             .db('lucky7Travel')
             .collection('itinerary')
             .updateOne({ _id: itineraryId }, { $set: updates });
 
         if (result.modifiedCount > 0) {
-            res.status(204).send();
+            res.status(200).json({ message: "Itinerary updated successfully." });
         } else {
             res.status(200).json({ message: "No changes made to itinerary." });
         }
@@ -158,7 +173,7 @@ const deleteItinerary = async (req, res) => {
             .deleteOne({ _id: itineraryId });
 
         if (result.deletedCount > 0) {
-            res.status(204).send();
+            res.status(200).json({ message: "Itinerary deleted successfully." });
         } else {
             res.status(404).json({ message: "Itinerary not found" });
         }
