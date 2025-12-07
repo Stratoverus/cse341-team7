@@ -16,7 +16,7 @@ const updateDestinationAverage = async (destinationId) => {
         .collection('destination')
         .updateOne(
             { _id: new ObjectId(destinationId) },
-            { $set: { averageRating: averageRating, totalReviews: reviews.length } }
+            { $set: { rating: averageRating, totalReviews: reviews.length } }
         );
 };
 

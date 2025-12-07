@@ -4,8 +4,14 @@ const passport = require('passport');
 
 router.get('/', (req, res) => {
     //#swagger.tags=['Landing Page'] 
+    const loginStatus = req.isAuthenticated() ? 
+        `<p>Status: <strong>Logged in</strong></p>
+         <a href="/logout">Logout</a>` : 
+        `<p>Status: <strong>Logged out</strong></p>
+         <a href="/login">Login with GitHub</a>`;
     res.send(`
       <h1>Lucky 7 Travel Project</h1>
+      ${loginStatus}
       <p>Endpoint available: </p>
       <ul>
         <li><a href='/user'>User</a></li>
