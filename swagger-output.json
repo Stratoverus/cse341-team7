@@ -69,9 +69,7 @@
             ]
           }
         ]
-      }
-    },
-    "/user/{id}": {
+      },
       "post": {
         "tags": [
           "Users"
@@ -79,12 +77,6 @@
         "summary": "creates user and add to database",
         "description": "",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
@@ -114,9 +106,6 @@
           "204": {
             "description": "No Content"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -128,7 +117,9 @@
             ]
           }
         ]
-      },
+      }
+    },
+    "/user/{id}": {
       "get": {
         "tags": [
           "Users"
