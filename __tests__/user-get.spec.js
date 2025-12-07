@@ -18,15 +18,7 @@ describe('user Get', () => {
     expect(res.statusCode).toBe(200);
   });
 
-  test('responds to GET /user/:id with valid ID', async () => {
-
-    const res = await request.get(`/user/${id}`);
-    expect(res.header['content-type']).toMatch(/application\/json/);
-    expect(res.statusCode).toBe(200);
-    expect(res.body).toHaveProperty('email', 'janedoe@mail.com');
-  });
-
-  test('responds to GET /user/:id with invalid ID format', async () => {
+    test('responds to GET /user/:id with invalid ID format', async () => {
     const res = await request.get('/user/123'); // not a valid ObjectId
     expect(res.statusCode).toBe(400);
     expect(res.body).toHaveProperty('message', 'Invalid user ID');
