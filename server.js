@@ -7,6 +7,7 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { ObjectId } = require('mongodb');
 
 app
     .use(bodyParser.json())
@@ -30,30 +31,30 @@ app
         next();
     })
     .use(cors({ methods: ['GET', 'POST', 'DELETE', 'PUT']}))
-    .use(cors({ origin: '*' }))
     .use('/', require('./routes'))
     
     passport.use(new GitHubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: process.env.CALLBACK_URL
+        callbackURL: process.env.CALLBACK_URL,
+        scope: ['user:email']
     },
     async function(accessToken, refreshToken, profile, done) {
         try {
             const userCollection = mongodb.getDatabase().db('lucky7Travel').collection('user');
-            const user = userCollection.findOne({ githubId: profile.id });
+            let user = await userCollection.findOne({ githubId: profile.id });
             if (!user) {
-                const result = await userCollection.insertOne({
+                await userCollection.insertOne({
                     githubId: profile.id,
                     username: profile.username,
-                    name: profile.name,
-                    email: profile.email,
+                    name: profile.name || profile.username,
+                    email: (profile.emails && profile.emails[0] && profile.emails[0].value) || null,
                     role: 'client',
                     createdAt: new Date()
                 });
-                const user = userCollection.findOne({ githubId: profile.id });
+                user = await userCollection.findOne({ githubId: profile.id });
             }
-            return done(null, profile)
+            return done(null, user)
         } catch (error) {
             return done(error);
         }
@@ -61,18 +62,23 @@ app
 ));
     
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
 })
-passport.deserializeUser((user, done) => {
-    done(null, user);
-})
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await mongodb.getDatabase()
+            .db('lucky7Travel')
+            .collection('user')
+            .findOne({ _id: new ObjectId(id) });
 
-app.get('/', (req, res) => {
-    res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.name}` : 'Logged Out')
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
 });
 
 app.get('/github/callback', passport.authenticate('github', {
-    failureRedirect: '/api-docs', session: false}),
+    failureRedirect: '/api-docs' }),
     (req, res) => {
     req.session.user = req.user;
     res.redirect('/');
@@ -86,3 +92,5 @@ mongodb.initDb((err) => {
         app.listen(port, () => {console.log(`Database is listening with node running on port ${port}`)});
     }
 })
+
+module.exports = app;

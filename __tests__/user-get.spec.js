@@ -1,4 +1,4 @@
-const app = require('../app')
+const app = require('../server')
 const supertest = require('supertest');
 const { expect } = require('@jest/globals');
 const request = supertest(app)
@@ -19,15 +19,6 @@ describe('user Get', () => {
   });
 
   test('responds to GET /user/:id with valid ID', async () => {
-    // Insert a test user first
-    const newUser = await request.post('/user').send({
-      username: "jdoe",
-      name: "Jane",
-      email: "janedoe@mail.com",
-      role: "user",
-      password: "Password123!"
-    });
-    const id = newUser.body.id;
 
     const res = await request.get(`/user/${id}`);
     expect(res.header['content-type']).toMatch(/application\/json/);
