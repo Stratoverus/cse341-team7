@@ -74,13 +74,11 @@ const updateUser = async (req, res) => {
         }
 
         const userId = new ObjectId(req.params.id);
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = {
             username: req.body.username,
             name: req.body.name,
             email: req.body.email,
             role: req.body.role,
-            password: hashedPassword
         };
 
         const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").updateOne({ _id: userId }, { $set: user });

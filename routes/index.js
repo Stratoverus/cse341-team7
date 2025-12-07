@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
       <h1>Lucky 7 Travel Project</h1>
       <p>Endpoint available: </p>
       <ul>
-        <li><a href='/users'>Users</a></li>
+        <li><a href='/user'>User</a></li>
         <li><a href='/destination'>Destination</a></li>
         <li><a href='/itinerary'>Itinerary</a></li>
         <li><a href='/review'>Review</a></li>
