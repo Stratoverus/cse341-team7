@@ -38,19 +38,17 @@ const getSingleUser = async (req, res) => {
     }
 };
 
-/*const createUser = async (req, res) => {
+const createUser = async (req, res) => {
     //#swagger.tags=["Users"]
     //#swagger.summary = creates user and add to database 
     //#swagger.security = [{ "githubOAuth": ["user:email"] }]
     //#swagger.responses[204]
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = {
             username: req.body.username,
             name: req.body.name,
             email: req.body.email,
             role: req.body.role,
-            password: hashedPassword
         };
         const response = await mongodb.getDatabase().db('lucky7Travel').collection("user").insertOne(user);
     
@@ -62,7 +60,7 @@ const getSingleUser = async (req, res) => {
         res.status(500).json({ message: "User creation failed" });
     }
 };
-*/
+
 const updateUser = async (req, res) => {
     //#swagger.tags=["Users"]
     //#swagger.summary = updates user
@@ -117,4 +115,4 @@ const deleteUser = async (req, res) => {
 };
 
 
-module.exports = { getAll, getSingleUser, /*createUser,*/ updateUser, deleteUser }
+module.exports = { getAll, getSingleUser, createUser, updateUser, deleteUser }

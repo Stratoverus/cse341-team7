@@ -15,14 +15,14 @@ const validateUser = [
         .notEmpty()
         .isString()
         .withMessage("Select from dropdown"),
-    body("password")
+    /*body("password")
     .notEmpty()
     .withMessage("Password required")
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters long")
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/)
     .withMessage("Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"),
-
+*/
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
