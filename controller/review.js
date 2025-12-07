@@ -90,6 +90,7 @@ const createReview = async (req, res) => {
             .insertOne(newReview);
 
         if (result.acknowledged) {
+            await reviewUpdater.updateDestinationAverage(newReview.destnationId);
             res.status(201).json({ message: 'Review created successfully', id: result.insertedId });
         } else {
             res.status(400).json({ error: 'Failed to create Review' });
@@ -127,6 +128,13 @@ const updateReview = async (req, res) => {
             );
 
         if (result.modifiedCount > 0) {
+            //Need to add this here to make sure it can either grab the id from the db or from the input.
+            const destinationId = req.body.destnationId || (await mongodb.getDatabase()
+                .db('lucky7Travel')
+                .collection('review')
+                .findOne({ _id: reviewId })).destnationId;
+            
+            await reviewUpdater.updateDestinationAverage(destinationId);
             res.status(200).json({ message: 'Review updated successfully' });
         } else {
             res.status(404).json({ error: 'Rwview not found or no changes applied' });
@@ -146,6 +154,7 @@ const deleteReview = async (req, res) => {
             .deleteOne({ _id: reviewId });
 
         if (result.deletedCount > 0 ) {
+            await reviewUpdater.updateDestinationAverage(review.destnationId);
             res.status(204).send();
         } else {
             res.status(404).json({ message: "Review not found" });
