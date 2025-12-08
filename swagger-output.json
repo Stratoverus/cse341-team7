@@ -574,6 +574,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -620,17 +623,56 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update any field(s) you want",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Updated Paris Trip"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Now with more croissants"
+                },
+                "startDate": {
+                  "type": "string",
+                  "example": "2025-02-02"
+                },
+                "endDate": {
+                  "type": "string",
+                  "example": "2025-03-03"
+                },
+                "destinations": {
+                  "type": "array",
+                  "example": [
+                    "6927f199f077d9b1233da123"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "isPublic": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           },
-          "204": {
-            "description": "No Content"
-          },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -654,8 +696,11 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
