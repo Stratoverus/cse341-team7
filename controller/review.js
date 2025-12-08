@@ -39,7 +39,7 @@ const getByDestination = async (req, res) => {
         const reviews = await mongodb.getDatabase()
             .db('lucky7Travel')
             .collection('review')
-            .find({ destnationId: placeId })
+            .find({ destinationId: placeId })
             .toArray();
 
         if (reviews.length === 0) {
@@ -79,7 +79,7 @@ const createReview = async (req, res) => {
     try {
         const newReview = {
             userId: req.body.userId,
-            destnationId: req.body.destnationId,
+            destinationId: req.body.destinationId,
             rating: req.body.rating,
             reviewText: req.body.reviewText,
             visitDate: req.body.visitDate,
@@ -92,7 +92,7 @@ const createReview = async (req, res) => {
             .insertOne(newReview);
 
         if (result.acknowledged) {
-            await reviewUpdater.updateDestinationAverage(newReview.destnationId);
+            await reviewUpdater.updateDestinationAverage(newReview.destinationId);
             res.status(201).json({ message: 'Review created successfully', id: result.insertedId });
         } else {
             res.status(400).json({ error: 'Failed to create Review' });
@@ -107,7 +107,7 @@ const updateReview = async (req, res) => {
     try {
         const reviewId = new ObjectId(req.params.id);
         const updateFields = {};
-        const reviewFields = ['userId', 'destnationId', 'rating', 'reviewText', 'reviewDate'];
+        const reviewFields = ['userId', 'destinationId', 'rating', 'reviewText', 'reviewDate'];
 
         // const updateFields = Object.fromEntries(
         //     fields
@@ -131,10 +131,10 @@ const updateReview = async (req, res) => {
 
         if (result.modifiedCount > 0) {
             //Need to add this here to make sure it can either grab the id from the db or from the input.
-            const destinationId = req.body.destnationId || (await mongodb.getDatabase()
+            const destinationId = req.body.destinationId || (await mongodb.getDatabase()
                 .db('lucky7Travel')
                 .collection('review')
-                .findOne({ _id: reviewId })).destnationId;
+                .findOne({ _id: reviewId })).destinationId;
             
             await reviewUpdater.updateDestinationAverage(destinationId);
             res.status(200).json({ message: 'Review updated successfully' });
@@ -156,7 +156,7 @@ const deleteReview = async (req, res) => {
             .deleteOne({ _id: reviewId });
 
         if (result.deletedCount > 0 ) {
-            await reviewUpdater.updateDestinationAverage(review.destnationId);
+            await reviewUpdater.updateDestinationAverage(review.destinationId);
             res.status(204).send();
         } else {
             res.status(404).json({ message: "Review not found" });
