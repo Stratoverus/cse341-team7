@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const reviewCtrl = require('../controller/review');
 const { reviewRules } = require('../utilities/reviewValidation');
+const { isAuthenticated } = require('../utilities/userAuthentication');
 
 router.get('/', reviewCtrl.getAll);
 
@@ -10,10 +11,10 @@ router.get('/getByUser/:id', reviewCtrl.getByUser);
 
 router.get('/:id', reviewCtrl.getSingle);
 
-router.post('/', reviewRules, reviewCtrl.createReview);
+router.post('/', isAuthenticated, reviewRules, reviewCtrl.createReview);
 
-router.put('/:id', reviewRules, reviewCtrl.updateReview);
+router.put('/:id', isAuthenticated, reviewRules, reviewCtrl.updateReview);
 
-router.delete('/:id', reviewCtrl.deleteReview);
+router.delete('/:id', isAuthenticated, reviewCtrl.deleteReview);
 
 module.exports = router;
