@@ -3,18 +3,20 @@ const { body, validationResult } = require("express-validator")
 const validateUser = [
     body("username")
         .notEmpty()
-        .withMessage("Username required"),
+        .isLength({ min: 3, max: 20 })
+        .withMessage("Username must be between 3 and 20 characters"),
     body("name")
         .notEmpty()
         .withMessage("Name must be listed"),
     body("email")
         .notEmpty()
         .isEmail()
+        .normalizeEmail()
         .withMessage ("Email must be valid"),
     body("role")
         .notEmpty()
-        .isString()
-        .withMessage("Select from dropdown"),
+        .isIn(["admin", "user", "editor"])
+        .withMessage("Role must be one of: admin, user, or editor"),
     /*body("password")
     .notEmpty()
     .withMessage("Password required")
