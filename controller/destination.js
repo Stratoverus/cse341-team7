@@ -86,7 +86,7 @@ const addDestination = async (req, res) => {
             description: req.body.description,
             tags: req.body.tags,
             rating: 0,
-            totalReviews: 0,
+            totalReviews: 0
         };
 
 
