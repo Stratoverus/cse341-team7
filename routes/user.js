@@ -4,7 +4,7 @@ const validateUser = require('../utilities/userValidation');
 const { isAuthenticated } = require('../utilities/userAuthentication');
 
 router.get('/', userController.getAll);
-router.post('/', userController.createUser); // create a user
+router.post('/', validateUser, userController.createUser); // create a user
 router.get('/:id', userController.getSingleUser); // getting a single user by ID
 
 router.put('/:id', isAuthenticated, validateUser, userController.updateUser);  //update User
