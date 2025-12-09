@@ -77,10 +77,12 @@ const getByUser = async (req, res) => {
 const createReview = async (req, res) => {
     //#swagger.tags=["Reviews"]
     try {
+        const userId = req.session.user._id;
+
         const newReview = {
-            userId: req.body.userId,
+            userId: userId,
             destinationId: req.body.destinationId,
-            rating: req.body.rating,
+            rating: Number(req.body.rating),
             reviewText: req.body.reviewText,
             visitDate: req.body.visitDate,
             reviewDate: req.body.reviewDate

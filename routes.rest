@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
     "userId": "692b4ebb984f0ba0c3b4d2d5",
-    "destnationId": "6927f199f077d9b1233da123",
+    "destinationId": "6927f199f077d9b1233da123",
     "rating": 5,
     "reviewText": "I loved this wonderful, dreamlike trip. A fantastic experience visiting historical and industrial sites.",
     "visitDate": "2025-01-02",
@@ -40,7 +40,7 @@ Content-Type: application/json
 
 {
     "userId": "",
-    "destnationId": "6927f199",
+    "destinationId": "6927f199",
     "rating": 9,
     "reviewText": 98709870986096,
     "visitDate": "2025-01-02",
