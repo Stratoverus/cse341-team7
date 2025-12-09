@@ -16,11 +16,15 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
     //#swagger.tags=["Reviews"]
     try {
+        if (!ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "Invalid review ID" });
+        }
+
         const reviewId = new ObjectId(req.params.id);
         const review = await mongodb.getDatabase().db('lucky7Travel').collection('review').findOne({ _id: reviewId });
 
         if (!review) {
-            return res.status(404).json({ message: "Review not found!" })
+            return res.status(404).json({ message: "Review not found" })
         }
 
         res.setHeader('Content-Type', 'application/json');
