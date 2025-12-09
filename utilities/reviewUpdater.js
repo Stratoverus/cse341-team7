@@ -5,7 +5,7 @@ const updateDestinationAverage = async (destinationId) => {
     const reviews = await mongodb.getDatabase()
         .db('lucky7Travel')
         .collection('review')
-        .find({ destnationId: destinationId })
+        .find({ destinationId: destinationId })
         .toArray();
     
     const averageRating = reviews.length > 0
@@ -16,7 +16,7 @@ const updateDestinationAverage = async (destinationId) => {
         .collection('destination')
         .updateOne(
             { _id: new ObjectId(destinationId) },
-            { $set: { rating: averageRating, totalReviews: reviews.length } }
+            { $set: { rating: parseFloat(averageRating.toFixed(1)), totalReviews: reviews.length } }
         );
 };
 

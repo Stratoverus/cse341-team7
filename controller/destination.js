@@ -85,7 +85,8 @@ const addDestination = async (req, res) => {
             country: req.body.country,
             description: req.body.description,
             tags: req.body.tags,
-            rating: 0
+            rating: 0,
+            totalReviews: 0
         };
 
 
