@@ -29,7 +29,10 @@ router.get('/login', passport.authenticate('github'), (req, res) => {})
 router.post('/logout', function(req, res, next) {
     req.logout(function(err) {
         if(err) { return next(err); }
-        res.redirect('/');
+        // express session explicit destruction
+        req.session.destroy(function (err) {
+            res.redirect('/');
+        });
     });
 });
 router.use('/user', require('./user'));
