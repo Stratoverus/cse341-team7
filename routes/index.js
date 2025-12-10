@@ -6,7 +6,9 @@ router.get('/', (req, res) => {
     //#swagger.tags=['Landing Page'] 
     const loginStatus = req.isAuthenticated() ? 
         `<p>Status: <strong>Logged in</strong></p>
-         <a href="/logout">Logout</a>` : 
+         <form action="/logout" method="POST"> 
+          <button type="submit"> Logout </button>
+         </form>` : 
         `<p>Status: <strong>Logged out</strong></p>
          <a href="/login">Login with GitHub</a>`;
     res.send(`
@@ -24,7 +26,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', passport.authenticate('github'), (req, res) => {})
-router.get('/logout', function(req, res, next) {
+router.post('/logout', function(req, res, next) {
     req.logout(function(err) {
         if(err) { return next(err); }
         res.redirect('/');
