@@ -152,6 +152,11 @@ const deleteReview = async (req, res) => {
     //#swagger.tags=["Reviews"]
     try {
         const reviewId = new ObjectId(req.params.id);
+
+        const review = await mongodb.getDatabase().db('lucky7Travel')
+            .collection('review')
+            .findOne({ _id: reviewId });
+
         const result = await mongodb.getDatabase()
             .db('lucky7Travel')
             .collection('review')
