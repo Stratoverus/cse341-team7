@@ -1,0 +1,8 @@
+To run indiviudual use the format
+npx jest __tests__/fileName.test.js
+
+you can use the script 'npx'
+npm run npx __tests__/fileName.test.js
+
+COVERAGE generates a report about tests using webpage 
+( /coverage/lcov-report/index.html )
